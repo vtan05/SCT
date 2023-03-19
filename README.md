@@ -1,2 +1,2 @@
-# SCT
+# Coursework
 Scientific Concepts and Thinking
