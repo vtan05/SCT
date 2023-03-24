@@ -1,3 +1,7 @@
+# Scientific Concepts and Thinking
+# HW 1: Letter Frequency
+# Submitted by Vanessa Tan 20225640
+
 from unidecode import unidecode
 from string import punctuation, digits, whitespace, ascii_lowercase
 
@@ -10,11 +14,11 @@ def countAlphabet(file):
     decoded = unidecode(file.lower())
 
     for letter in ascii_lowercase:
-        freq = round(decoded.count(letter) / len(decoded), 5)
+        freq = round(decoded.count(letter) / len(decoded), 4)
         print(letter + ": " + str(freq))
 
     others = punctuation + digits + whitespace
-    others_freq = round(count(decoded, others) / len(decoded), 5)
+    others_freq = round(count(decoded, others) / len(decoded), 4)
     print('- :' + str(others_freq))
 
 if __name__ == "__main__":
