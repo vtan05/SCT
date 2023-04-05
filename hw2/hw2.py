@@ -9,9 +9,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from unidecode import unidecode
-from string import punctuation, digits, whitespace, ascii_lowercase
+from string import punctuation, digits, whitespace
 
 def bayes(prob, decoded):
+
+    ###### Compute Bayes' theorem ######
+
     p_ab = prob['u'].prob('q')
     p_b = decoded.count('u') / len(decoded)
     p_ba = prob['q'].prob('u')
@@ -22,6 +25,9 @@ def bayes(prob, decoded):
     print(round((p_ba * p_a), 3))
 
 def bigram_prob(freq, filename, decoded):
+
+    ###### Compute bigram conditional probabilities ######
+
     prob = nltk.ConditionalProbDist(freq, nltk.MLEProbDist) 
 
     prob_table = np.zeros((27, 27))
@@ -51,6 +57,9 @@ def bigram_prob(freq, filename, decoded):
     bayes(prob, decoded)
 
 def gen_bigram(filename):
+
+    ###### Generate bigram probabilities ######
+
     myFile = open(filename, 'r', encoding='utf-8')
     file = myFile.read()
     decoded = unidecode(file.lower())
