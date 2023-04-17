@@ -39,16 +39,17 @@ def gen_cipher(text, x, alphabet):
 
 def bayes(prob, decoded):
 
-    ###### Compute Bayes' theorem ######
+    ###### Proving Bayes' Theorem ######
 
     p_ab = prob['V'].prob('Q')
     p_b = decoded.count('V') / len(decoded)
     p_ba = prob['Q'].prob('V')
     p_a = decoded.count('Q') / len(decoded)
 
-    print("Computing Bayes' Theorem")
-    print(round((p_ab * p_b), 3))
-    print(round((p_ba * p_a), 3))
+    print("Proving Bayes' Theorem")
+    print(round((p_ab * p_b), 4))
+    print(round((p_ba * p_a), 4))
+
 
 def bigram_prob(freq, decoded):
 
@@ -64,7 +65,7 @@ def bigram_prob(freq, decoded):
     df = pd.DataFrame(prob_table, index=sorted(prob.conditions()), columns=sorted(prob.conditions()))
     fig = plt.figure()
     sns.heatmap(df, cmap='turbo', xticklabels=True, yticklabels=True)
-    plt.title("Bigram Conditional Probabilities P(x|y)")
+    plt.title("Bigram Conditional Probabilities P(x|y) of Enciphered Text")
     plt.savefig('condprob_xy.png', dpi=300, bbox_inches='tight')
     plt.close(fig)
 
@@ -76,7 +77,7 @@ def bigram_prob(freq, decoded):
     df = pd.DataFrame(prob_table, index=sorted(prob.conditions()), columns=sorted(prob.conditions()))
     fig = plt.figure()
     sns.heatmap(df, cmap='turbo', xticklabels=True, yticklabels=True)
-    plt.title("Bigram Conditional Probabilities P(y|x)")
+    plt.title("Bigram Conditional Probabilities P(y|x) of Enciphered Text")
     plt.savefig('condprob_yx.png', dpi=300, bbox_inches='tight')
     plt.close(fig)
 
@@ -109,7 +110,7 @@ def gen_bigram(decoded):
     df = pd.DataFrame(prob_table, index=sorted(freq.conditions()), columns=sorted(freq.conditions()))
     fig = plt.figure()
     sns.heatmap(df, cmap='turbo', xticklabels=True, yticklabels=True)
-    plt.title("Bigram Probabilities")
+    plt.title("Bigram Probabilities of Enciphered Text")
     plt.savefig('bigram.png', dpi=300, bbox_inches='tight')
     plt.close(fig)
 
@@ -148,15 +149,23 @@ if __name__ == "__main__":
     otp_file = myOtp.read()
     otps = list(otp_file.split("\n"))
     
-    monoprobs = []
-    for otp in otps:
-        cipher = gen_cipher(decoded, int(otp), alphabet)
-        freq = mono_prob(cipher, alphabet)
-        monoprobs.append(freq)
-    print(np.array(monoprobs).shape)
+    # monoprobs = []
+    # for otp in range(len(otps)):
+    #     cipher = gen_cipher(decoded, int(otps[otp]), alphabet)
+    #     freq = mono_prob(cipher, alphabet)
+    #     monoprobs.append(freq)
+    # monoprobs = np.array(monoprobs)
 
-    for i in range(0,24):
-        print(alphabet[i] + ": " + str(np.mean(monoprobs[i])))
+    # for i in range(0,24):
+    #     if i < 23:
+    #         print(alphabet[i] + ": " + str(np.mean(monoprobs[:,i])))
+    #     else:
+    #         print("_: " + str(np.mean(monoprobs[:,i])))
 
-    #gen_bigram(decoded)
+    ##### Generate bigram probabilities of original text and Bayes' Theorem #####
+    gen_bigram(decoded)
+
+    ##### Generate bigram probabilities of enciphered text #####
+    # cipher = gen_cipher(decoded, int(otps[0]), alphabet)
+    # gen_bigram(cipher)
     
